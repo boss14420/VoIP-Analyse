@@ -1,0 +1,65 @@
+\chapter {Biểu đồ usecase}
+\section{Tổng quan}
+    \input{Diagrams/uc-overview.tex}
+
+    \textbf{Giải thích}:
+    Hệ thống gồm có 2 chương trình: \texttt{client} đặt ở máy của người sử dụng
+    và \texttt{server} đặt ở máy chủ.
+
+    Danh sách các \texttt{actor} và \texttt{usecase} như sau:
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{| c | l |}
+            \hline
+            Actor & Ý nghĩa \\
+            \hline
+            user 1 & người sử dụng (gọi) \\
+            user 2 & người sử dụng (nhận cuộc gọi) \\
+            database & cơ sở dữ liệu, lưu thông tin về người dùng và các cuộc
+            gọi \\
+            \hline
+        \end{tabular}
+        \caption{Danh sách các \texttt{actor}}
+    \end{table}
+
+    \begin{table}[ht]
+        \centering
+        \begin{tabular}{| c | l |}
+            \hline
+            Usecase & Ý nghĩa \\
+            \hline
+            Đăng ký & Đăng ký tài khoản người dùng mới \\
+            Đăng nhập & Đăng nhập bằng tài khoản đã có \\
+            Gọi & Gọi cho một người dùng khác \\
+            Nhận cuộc gọi & Nhận cuộc gọi từ một người dùng khác \\
+            Nói chuyện & Nói chuyện với người dùng khác trong cuộc gọi \\
+            \hline
+            Tạo tài khoản mới & Tạo tại khoản người dùng mới \\
+            Xác nhận người dùng & Xác nhận thông tin đăng nhập \\
+            Tạo kết nối đến người được gọi & Tạo kết nối đến người được gọi \\
+            Nhận dữ liệu thoại & Nhận dữ liệu tiếng nói từ người dùng \\
+            Gửi dữ liệu thoại & Gửi dữ liệu tiếng nói đến người dùng khác \\
+            \hline
+        \end{tabular}
+        \caption{Danh sách Usecase}
+    \end{table}
+
+    \textbf{Các kịch bản có thể có}
+    \begin{itemize}
+        \item Người dùng \texttt{user 1} đăng ký tài khoản mới bằng chương
+            trình \texttt{client}: \texttt{client} sẽ yêu cầu \texttt{server}
+            tạo môt tài khoản người dùng mới. Thông tin về tài khoản này sẽ
+            được lưu vào \texttt{database}.
+        \item Người dùng \texttt{user 1} đăng nhập bằng tài khoản của mình trên
+            \texttt{ client}: \texttt{server} sẽ được yêu cầu xác nhận thông
+            tin đăng nhập để \texttt{user 1} có thể dùng được các chức năng sau
+            này. Để làm điều đó thì \texttt{server} phải truy vấn thông tin
+            trong \texttt{database}.
+        \item Người dùng \texttt{user 1} gọi cho một người dùng khác (chẳng hạn
+            \texttt{user 2}. Khi đó \texttt{server} sẽ tạo kết nối đến chương
+            trình \texttt{client} của người dùng \texttt{user 2}, yêu cầu
+            \texttt{user 2} nhận cuộc gọi. Khi \texttt{user 2} đồng ý nhận cuộc
+            gọi, 2 người dùng có thể nói chuyện được với nhau. Dữ liệu tiếng
+            nói của 2 người có thể trao đổi trực tiếp, hoặc thông qua
+            \texttt{server}.
+    \end{itemize}

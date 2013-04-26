@@ -1,0 +1,42 @@
+\begin{tikzpicture}
+    \tikzumlset{font=\scriptsize}
+
+    \umlactor[x=0, y=2]{user 1}
+    \umlactor[x=0, y=-2]{user 2}
+    \umlactor[x=14, y=0]{database}
+
+    % client system
+    \begin{umlsystem}[x=2, y=0, fill=green!10]{client}
+        \umlusecase[x=2, y=2, name=reg]{Đăng ký}
+        \umlusecase[x=2, y=1, name=login]{Đăng nhập}
+        \umlusecase[x=2, y=0, name=call]{Gọi}
+        \umlusecase[x=2, y=-2.5, name=talk]{Nói chuyện}
+        \umlusecase[x=2, y=-.75, name=receive]{Nhận cuộc gọi}
+    \end{umlsystem}
+
+    % server system
+    \begin{umlsystem}[x=5.5, y=0, fill=red!10]{server}
+        \umlusecase[x=5, y=2, name=createuser]{Tạo tài khoản mới}
+        \umlusecase[x=5, y=1, name=authenticate]{Xác nhận người dùng}
+        \umlusecase[x=5, y=0, name=connect]{Tạo kết nối đến người được gọi}
+        \umlusecase[x=5, y=-1, name=receivetalkdata]{Nhận dữ liệu thoại}
+        \umlusecase[x=5, y=-3, name=sendtalkdata]{Gửi dữ liệu thoại}
+    \end{umlsystem}
+
+    \umlinherit{user 2}{user 1} 
+    \umluniassoc{user 1}{reg}
+    \umlinclude{reg}{createuser}
+    \umlassoc{createuser}{database}
+    \umluniassoc{user 1}{login}
+    \umlinclude{login}{authenticate}
+    \umlassoc{authenticate}{database}
+    \umluniassoc{user 1}{call}
+    \umlinclude{call}{connect}
+    \umlinclude{connect}{receive}
+    \umluniassoc{receive}{user 2}
+    \umlassoc{user 2}{talk}
+    \umlassoc{talk}{user 1}
+    \umlextend{talk}{receivetalkdata}
+    \umlinclude{receivetalkdata}{sendtalkdata}
+    \umlinclude{sendtalkdata}{talk}
+\end{tikzpicture}
